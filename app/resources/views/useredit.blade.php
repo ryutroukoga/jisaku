@@ -21,14 +21,14 @@
                         <div class="d-flex justify-content-around">
                             <label for="name" class="col-sm-2 col-form-label no-wrap space">ユーザー名</label>
                             <div class="col-sm-7">
-                                <input type="text" class="form-control" id="name" name="name" value="">
+                                <input type="text" class="form-control" id="name" name="name" value="{{ $user->name }}">
                             </div>
                         </div>
                         <br>
                         <div class="d-flex justify-content-around">
                             <label for="email" class="col-sm-2 col-form-label no-wrap space">メールアドレス</label>
                             <div class="col-sm-7">
-                                <input type="email" class="form-control" id="email" name="email" value="">
+                                <input type="email" class="form-control" id="email" name="email" value="{{ $user->email }}">
                             </div>
                         </div>
                         <br>
@@ -44,7 +44,7 @@
                             <button type="submit" class="btn btn-primary">変更する</button>
                         </div>
                     </form>
-                    <form action="{{ route('user.delete') }}" method="POST" class="mt-3">
+                    <form action="{{ route('user.delete1') }}" method="POST" class="mt-3">
                         @csrf
                         @method('POST')
                         <div class="d-grid gap-2 col-3 mx-auto">

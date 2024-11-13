@@ -27,19 +27,20 @@
                 <thead>
                     <tr>
                         <th scope="col">投稿タイトル</th>
-                        <th scope="col">投稿ユーザー</th>
                         <th scope="col">ユーザー詳細</th>
                         <th scope="col">違反投稿件数</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>2</td>
-                        <td><a href="ページのURL">ユーザー名</a></td>
-                        <td>4</td>
+                    @foreach($posts as $post)
+                    <tr onclick="window.location='{{ route('kanripost.detail', $post->id) }}'">
+                        <td>{{ $post->title }}</td>
+                        <td><a href="{{ route('user.detail', $post->user->id) }}">{{ $post->user->name }}</a></td>
+                        <td>{{ $post->dangers_count }}</td>
                     </tr>
+                    @endforeach
                 </tbody>
+
             </table>
             <div class="d-flex flex-row-reverse">
                 <button type="button" class="btn btn-link">次ページ＞</button>

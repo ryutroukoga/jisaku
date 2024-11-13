@@ -10,7 +10,7 @@
                         <img src="{{ $post->image }}" alt="ユーザー名" class="user-image" style="width: 80px; height: auto;">
                     </div>
                     <div class="ms-3">
-                        <p class="card-text　large-text">{{ $post->title }}</p>
+                        <p class="card-text large-text">{{ $post->title }}</p>
                         <p class="card-text">{{ $post['detail'] }}</p>
                     </div>
                 </div>

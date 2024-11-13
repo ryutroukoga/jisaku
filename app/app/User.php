@@ -12,18 +12,18 @@ class User extends Authenticatable
         'email',
         'password',
     ];
-    public function post()
+    public function posts()
     {
         return $this->hasMany('App\Post');
     }
 
-    public function danger()
+    public function dangers()
     {
         return $this->hasMany('App\Danger');
     }
 
-    public function request()
+    public function applications()
     {
-        return $this->hasMany('App\Request');
+        return $this->hasMany('App\Application');
     }
 }

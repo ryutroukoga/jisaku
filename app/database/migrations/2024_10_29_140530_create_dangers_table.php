@@ -18,6 +18,7 @@ class CreateDangersTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('post_id');
             $table->string('detail', 500)->nullable();
+
             $table->timestamps();
         });
     }

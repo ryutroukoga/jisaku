@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Danger extends Model
 {   
-    public function user(){
+    public function users(){
         return $this->belongsTo('App\User','user_id','id');
     }
 
-    public function post(){
+    public function posts(){
         return $this->belongsTo('App\Post','post_id','id');
     }
 }

@@ -26,8 +26,8 @@ class RegistrationController extends Controller
     // 入力内容を確認画面に渡す
     public function requestcheck(Request $request)
     {
-        // 仮のID
-        $user_id = 1;
+        $user_id = auth()->user()->id;
+
         return view('request', [
             'user_id' => $user_id,
             'detail' => $request->input('detail'),
@@ -92,47 +92,107 @@ class RegistrationController extends Controller
     //マイページへ
     public function mypage()
     {
-        // // ログインしていない場合はログインページにリダイレクト
-        // if (!Auth::check()) {
-        //     return redirect()->route('logingo');
-        // }
-    
-        $user = Auth::user(); // ログインしているユーザーの情報を取得
-        return view('mypage', compact('user')); // 'mypage' ビューにユーザー情報を渡す
+        // ログインしていない場合はログインページにリダイレクト
+        if (!Auth::check()) {
+            return redirect()->route('logingo');
+        }
+        $user = Auth::user();
+        $posts = Post::where('user_id', Auth::id())->get();
+        // ビューにユーザー情報と投稿データを渡す
+        return view('mypage', compact('user', 'posts'));
     }
-    
 
-
-
-
-
-
-
-
-
-
-    public function userupdate()
+    // ユーザーの編集・登録画面へ遷移
+    public function useredit(Request $request)
     {
-        // $user = Auth::user();
-
-        // $user->name = $request->name;
-        // $user->email = $request->email;
-        // $user->save();
-
-        return redirect("/");
+        $user = Auth::user();
+        return view('useredit', compact('user'));
     }
+    // ユーザー情報編集
+    public function userupdate(Request $request)
+    {
+        $user = Auth::user();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->save();
+        return redirect()->route('mypage')->with('user', $user);
+    }
+    // ユーザー退会
     public function userdelete()
     {
-        // $user = Auth::user();
-        // $user->delete();
-
-        return view("userdelete");
+        $user = Auth::user();
+        // del_flgを1に設定して論理削除
+        $user->del_flg = 1;
+        $user->save();
+        // ログアウトしてホーム画面にリダイレクト
+        Auth::logout();
+        return redirect('/');
     }
-    public function deletemypage()
-    {
-        // $user = Auth::user();
-        // $user->delete();
 
-        return redirect("/");
+    //マイページから依頼投稿画面へ
+    public function requestform1(Request $request)
+    {
+        $post = new Post;
+        $post->title = $request->title;
+        $post->amount = $request->amount;
+        $post->detail = $request->detail;
+        $post->image = $request->image;
+        $post->user_id = Auth::id();
+        $post->status = '掲載中';
+        $post->save();
+        // return redirect()->route('mypage');
+        return redirect('/mypage');
+    }
+    //投稿詳細・編集
+    public function requestformedit($id)
+    {
+        // 特定の投稿データを取得
+        $post = Post::findOrFail($id);
+        // 編集画面を返す
+        return view('requestformedit', compact('post'));
+    }
+
+    //編集画面からマイページへ
+    public function requestupdate(Request $request, $id)
+    {
+        $post = Post::findOrFail($id);
+        $post->title = $request->input('title', $post->title);
+        $post->amount = $request->input('amount', $post->amount);
+        $post->detail = $request->input('detail', $post->detail);
+        $post->status = $request->input('status', $post->status);
+        $post->save();
+        return redirect()->route('mypage');
+    }
+
+
+    //管理画面からユーザー一覧へ
+    public function alluser(Request $request)
+    {
+        $users = User::all();
+        $users->loadCount('posts');
+        return view('alluser', compact('users'));
+    }
+
+    //管理画面からユーザー一覧へ
+    public function allpost(Request $request)
+    {
+        // 投稿と関連ユーザー情報、および違反報告数を一緒に取得
+        $posts = Post::with('users')->withCount('dangers')->get();
+        return view('allpost', compact('posts'));
+    }
+
+    //ポスト詳細画面
+    public function kanripostdetail(int $postID)
+    {
+        $post = Post::findOrFail($postID); // IDが存在しない場合は404を返す
+        return view('kanripostdetail', compact('post'));
+    }
+
+    // 投稿一覧からユーザー詳細画面
+    public function userdetail($userId)
+    {
+        $users = User::with('posts')->findOrFail($userId);
+
+        return view('userdetail', compact('users'));
     }
 }

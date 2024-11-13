@@ -26,7 +26,6 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th scope="col">ユーザー名</th>
                         <th scope="col">ユーザー詳細</th>
                         <th scope="col">投稿件数</th>
                         <th scope="col">表示停止件数</th>
@@ -35,9 +34,8 @@
                 <tbody>
                     @foreach($users as $user)
                     <tr>
-                        <td>{{ $user['name'] }}</td>
-                        <td><a href="ページのURL">{{ $user['name'] }}</a></td>
-                        <td></td>
+                        <td><a href="{{ route('user.detail', $user->id) }}">{{ $user['name'] }}</a></td>
+                        <td>{{ $user->posts_count }}</td>
                         <td></td>
                     </tr>
                     @endforeach
@@ -51,5 +49,4 @@
         <!-- 10件表示 -->
     </div>
 </div>
-
 @endsection

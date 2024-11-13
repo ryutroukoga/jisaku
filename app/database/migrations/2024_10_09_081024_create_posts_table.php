@@ -19,7 +19,7 @@ class CreatePostsTable extends Migration
             $table->string('title',30);
             $table->integer('amount');
             $table->string('detail',300);
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->string('status',10);
             $table->tinyInteger('del_flg')->default(0);
             $table->timestamps();

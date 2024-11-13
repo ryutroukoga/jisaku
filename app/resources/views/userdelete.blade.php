@@ -9,7 +9,7 @@
                     <div class="card-title text-center large-text">退会</div>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('delete.mypage') }}" method="POST">
+                    <form action="{{ route('user.delete') }}" method="POST">
                         @csrf
                         <div class="card-title text-center">退会するとすべてのデータが消えます。<br>
                             アカウントを削除しますか？
@@ -18,7 +18,7 @@
                         <div class="text-center">
                             <button type="submit" class="btn btn-danger">退会する</button>
                         </div>
-                        <p class="text-end">※マイページへ戻ります</p>
+                        <p class="text-end">※ホーム画面へ戻ります</p>
                     </form>
                 </div>
             </nav>

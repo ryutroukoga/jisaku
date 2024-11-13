@@ -6,10 +6,10 @@
         <div class="col col-md-offset-3 col-md-6">
             <nav class="card mt-5 nav-card">
                 <div class="text-center">
-                    <button class="btn btn-primary" type="button">ユーザー一覧</button>
+                    <a href="{{ route('alluser') }}" button class="btn btn-primary" type="button">ユーザー一覧</a>
                     <br>
                     <br>
-                    <button class="btn btn-primary" type="button">投稿一覧</button>
+                    <a href="{{ route('allpost') }}" button class="btn btn-primary" type="button">投稿一覧</a>
                 </div>
             </nav>
         </div>
